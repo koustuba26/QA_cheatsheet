@@ -1,0 +1,499 @@
+ 1.  import the necessary Selenium classes:
+
+    import org.openqa.selenium.By;
+        // statement is absolutely fundamental in Selenium WebDriver (Java) because the By class provides
+        // the mechanism for locating (finding) web elements on a web page.
+    
+    import org.openqa.selenium.WebDriver;
+        // This import provides the core WebDriver interface, which is essential for controlling browsers.
+
+    import org.openqa.selenium.WebElement;
+        // statement is used in Selenium WebDriver (Java) because the WebElement interface is the
+        // core representation of any interactive element on a web page.
+    
+    import org.openqa.selenium.chrome.ChromeDriver;
+        // This import provides the specific class for interacting with the google crome browser.
+
+    import org.openqa.selenium.support.ui.ExpectedConditions;
+        // statement is crucial in Selenium WebDriver (Java) because it provides a set of pre-defined 
+        // conditions that are used with Explicit Waits.
+
+    import org.openqa.selenium.support.ui.WebDriverWait;
+        // This class is fundamental for implementing Explicit Waits, which are a crucial 
+        // synchronization mechanism in automated testing.
+
+    import org.openqa.selenium.Alert;
+        // This interface provides methods specifically designed to interact with browser-level 
+        // JavaScript pop-up boxes, often referred to as "alerts," "confirmations," or "prompts."
+
+    import org.openqa.selenium.Keys;
+        // For keyboard actions
+
+    import org.openqa.selenium.interactions.Actions;
+        // For complex interactions
+    
+    import org.openqa.selenium.WindowType;
+        // For creating new tabs/windows (Selenium 4+)
+
+    import java.time.Duration;
+        // For modern explicit waits
+
+    // FirefoxDriver
+
+    import org.openqa.selenium.firefox.FirefoxDriver; 
+        // This import allows you to create an instance of the Firefox driver, which controls
+        // the Firefox browser.
+
+    import org.openqa.selenium.firefox.FirefoxOptions;
+        // This import provides options to configure the behavior of the Firefox driver, such 
+        //as setting the profile, headless mode, etc.
+
+    import org.openqa.selenium.firefox.FirefoxProfile;
+        // This import is used for managing Firefox profiles, which can store user preferences
+        // and settings.
+    
+    //EdgeDriver
+
+    import org.openqa.selenium.edge.EdgeDriver; 
+        // This import provides the specific class for interacting with the Microsoft Edge browser.
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+2.  instantiate a WebDriver
+
+    //ChromeDriver
+
+        // Set the path to your WebDriver executable (e.g., chromedriver.exe)
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
+    
+    //FirefoxDriver
+
+        // Set the path to the GeckoDriver executable
+        System.setProperty("webdriver.gecko.driver", "path/to/geckodriver.exe");
+        WebDriver driver = new FirefoxDriver();
+    
+    //EdgeDriver
+
+        // Set the path to the MSEdgeDriver executable
+        System.setProperty("webdriver.edge.driver", "path/to/msedgedriver.exe");
+        WebDriver driver = new EdgeDriver();
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+3.  Browser Commands (WebDriver Interface)
+
+    driver.get(String url): Navigates to the specified URL.
+
+        driver.get("https://www.google.com");
+    
+    driver.getTitle(): Gets the title of the current page.
+
+        String pageTitle = driver.getTitle();
+        System.out.println("Page Title: " + pageTitle);
+    
+    driver.getCurrentUrl(): Gets the URL of the current page.
+
+        String currentUrl = driver.getCurrentUrl();
+        System.out.println("Current URL: " + currentUrl);
+    
+    driver.getPageSource(): Gets the HTML source of the current page.
+
+        String pageSource = driver.getPageSource();
+        System.out.println(pageSource); // Be careful, can be very large
+    
+    driver.close(): Closes the current browser window/tab that WebDriver is focused on. If it's the only window, it will close the browser.
+
+        driver.close();
+    
+    driver.quit(): Quits the entire WebDriver session, closing all associated browser windows.
+
+        driver.quit();
+    
+    driver.navigate().back(): Navigates back in the browser's history.
+
+        driver.navigate().back();
+
+    driver.navigate().forward(): Navigates forward in the browser's history.
+
+        driver.navigate().forward();
+        
+    driver.navigate().refresh(): Refreshes the current page.
+
+        driver.navigate().refresh();
+
+    driver.manage().window().maximize(): Maximizes the current browser window.
+
+        driver.manage().window().maximize();
+        
+    driver.manage().window().minimize(): Minimizes the current browser window (Selenium 4+).
+
+        driver.manage().window().minimize();
+
+    driver.manage().window().fullscreen(): Puts the current browser window in full-screen mode (Selenium 4+).
+
+        driver.manage().window().fullscreen();
+
+    driver.manage().window().setSize(new Dimension(width, height)): Sets the size of the current window.
+
+        import org.openqa.selenium.Dimension;
+        driver.manage().window().setSize(new Dimension(1024, 768));
+        
+    driver.manage().window().setPosition(new Point(x, y)): Sets the position of the current window.
+
+        import org.openqa.selenium.Point;
+        driver.manage().window().setPosition(new Point(100, 100));
+        
+    driver.manage().timeouts().implicitlyWait(Duration timeout): Sets an implicit wait. WebDriver will wait for a certain amount of time when trying to find an element before throwing a NoSuchElementException.
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+4.  WebElement Commands
+
+    i. Locating Elements (driver.findElement() / driver.findElements())
+
+        By.id(String id): Locates an element by its id attribute.
+
+            WebElement searchBox = driver.findElement(By.id("APjFqb"));
+            
+        By.name(String name): Locates an element by its name attribute.
+
+            WebElement usernameField = driver.findElement(By.name("username"));
+
+        By.className(String className): Locates elements by their class attribute.
+
+            WebElement submitButton = driver.findElement(By.className("gNO89b"));
+
+        By.tagName(String tagName): Locates elements by their HTML tag name (e.g., "div", "input", "a").
+
+            WebElement firstLink = driver.findElement(By.tagName("a"));
+
+        By.linkText(String linkText): Locates an anchor element (<a>) by its exact visible text.
+
+            WebElement aboutLink = driver.findElement(By.linkText("About"));
+
+        By.partialLinkText(String partialLinkText): Locates an anchor element (<a>) by partial visible text.
+
+            WebElement settingsLink = driver.findElement(By.partialLinkText("Settings"));
+            
+        By.cssSelector(String cssSelector): Locates elements using CSS selectors (very powerful and efficient).
+
+            WebElement elementByCss = driver.findElement(By.cssSelector("#APjFqb"));
+            WebElement specificDiv = driver.findElement(By.cssSelector("div.myClass > span:nth-child(2)"));
+
+        By.xpath(String xpathExpression): Locates elements using XPath expressions (very flexible, but can be complex).
+
+            WebElement elementByXpath = driver.findElement(By.xpath("//input[@name='q']"));
+            WebElement parentDiv = driver.findElement(By.xpath("//div[@id='someId']/.."));
+
+        driver.findElements(By strategy): Returns a List<WebElement> of all matching elements.
+
+            List<WebElement> allLinks = driver.findElements(By.tagName("a"));
+            System.out.println("Number of links: " + allLinks.size());
+
+    ii. Interacting with Elements (after WebElement is found)
+
+        element.click(): Simulates a mouse click on the element.
+
+            searchBox.click();
+            
+        element.sendKeys(CharSequence... keysToSend): Types text into an input field or sends keyboard keys.
+
+            searchBox.sendKeys("Selenium WebDriver");
+            searchBox.sendKeys(Keys.ENTER); // Simulates pressing Enter
+            
+        element.clear(): Clears the content of a text entry element.
+
+            searchBox.clear();
+
+        element.submit(): Submits a form. Can be called on the form element itself or any element within the form.
+
+            WebElement myForm = driver.findElement(By.id("myForm"));
+            myForm.submit();
+        
+        element.getText(): Retrieves the visible (inner) text of the element.
+
+            WebElement resultStats = driver.findElement(By.id("result-stats"));
+            String statsText = resultStats.getText();
+            System.out.println("Result stats: " + statsText);
+
+        element.getAttribute(String name): Gets the value of a specified attribute (e.g., "href", "value", "id", "class").
+
+            String inputValue = searchBox.getAttribute("value");
+            String linkHref = firstLink.getAttribute("href");
+
+        element.getCssValue(String propertyName): Gets the value of a specified CSS property.
+
+            String buttonColor = submitButton.getCssValue("background-color");
+
+        element.getTagName(): Gets the tag name of the element (e.g., "div", "input", "a").
+
+            String tagName = searchBox.getTagName();
+
+        element.isDisplayed(): Checks if the element is visible on the page. Returns true or false.
+
+            boolean isDisplayed = searchBox.isDisplayed();
+            
+        element.isEnabled(): Checks if the element is enabled (not disabled). Returns true or false.
+
+            boolean isEnabled = searchBox.isEnabled();
+        
+        element.isSelected(): Checks if an input element (like a checkbox or radio button) is selected. Returns true or false.
+
+            WebElement checkBox = driver.findElement(By.id("myCheckbox"));
+            boolean isChecked = checkBox.isSelected();
+        
+        element.getLocation(): Gets the x and y coordinates of the element's top-left corner. Returns a Point object.
+
+            Point location = searchBox.getLocation();
+            System.out.println("X: " + location.getX() + ", Y: " + location.getY());
+
+        element.getSize(): Gets the width and height of the element. Returns a Dimension object.
+
+            Dimension size = searchBox.getSize();
+            System.out.println("Width: " + size.getWidth() + ", Height: " + size.getHeight());
+
+        element.getRect(): Returns a Rectangle object containing the element's location and size (Selenium 4+).
+
+            import org.openqa.selenium.Rectangle;
+            Rectangle rect = searchBox.getRect();
+            System.out.println("X: " + rect.getX() + ", Y: " + rect.getY() + ", W: " + rect.getWidth() + ", H: " + rect.getHeight());
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+5.  Handling Alerts/Pop-ups
+
+    // Assuming an alert has appeared
+
+        Alert alert = driver.switchTo().alert();
+
+    // Accept the alert (click OK)
+
+        alert.accept();
+
+    // Dismiss the alert (click Cancel)
+
+        alert.dismiss();
+
+    // Get the text from the alert
+
+        String alertMessage = alert.getText();
+        System.out.println("Alert Message: " + alertMessage);
+
+    // Send text to a prompt alert
+
+        alert.sendKeys("My input text");
+    
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+6.  Handling Frames/Iframes
+    
+    // In a web browser, a frame is a section within a webpage that can display a separate HTML document,
+    // allowing for independent scrolling and content loading. Frames are typically created using
+    // HTML elements like <frameset> and <frame>, or the <iframe> element for embedding content from
+    // different websites
+
+    // Switch to a frame by its name or ID
+
+        driver.switchTo().frame("myFrameNameOrId");
+
+    // Switch to a frame by its index (0-based)
+
+        driver.switchTo().frame(0); // Switches to the first frame
+    
+    // Switch to a frame by its WebElement
+
+        WebElement myFrameElement = driver.findElement(By.xpath("//iframe[@title='myFrame']"));
+        driver.switchTo().frame(myFrameElement);
+
+    // Switch back to the main document from a frame
+
+        driver.switchTo().defaultContent();
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+7.  Handling Windows/Tabs
+
+    // In the context of web browsers and browser automation tools like Selenium, a window handle
+    // is a unique identifier assigned to each browser window or tab. It's a string value that allows
+    // you to differentiate between multiple open windows and switch between them to perform actions. 
+    
+    // Open a new tab (Selenium 4+ specific)
+
+        driver.switchTo().newWindow(WindowType.TAB);
+        driver.get("https://www.bing.com");
+        String bingWindowHandle = driver.getWindowHandle(); // Get handle of new tab
+        System.out.println("Bing Tab Title: " + driver.getTitle() + ", Handle: " + bingWindowHandle);
+    
+    // Open a new window (Selenium 4+ specific)
+
+        driver.switchTo().newWindow(WindowType.WINDOW); // Open a new window (separate browser window)
+        driver.get("https://www.duckduckgo.com");
+        String duckduckgoWindowHandle = driver.getWindowHandle(); // Get handle of new window
+        System.out.println("DuckDuckGo Window Title: " + driver.getTitle() + ", Handle: " + duckduckgoWindowHandle);
+
+    // Get the handle of the current window (main window)
+
+        String mainWindowHandle = driver.getWindowHandle();
+
+    // Get a set of all open window handles
+
+        import java.util.Set;
+        Set<String> allWindowHandles = driver.getWindowHandles();
+
+    // Iterate through the handles to find and switch to a specific window
+        
+        case 1: switch between windows or tabs using direct command
+
+            driver.switchTo().window(handle)
+        
+        case 2: You know the specific handle identifier
+
+            // Let's say you want to switch back to the Bing tab using its handle
+            System.out.println("\n--- Scenario 2: Switching using a known handle ---");
+            if (bingWindowHandle != null) {
+                driver.switchTo().window(bingWindowHandle);
+                System.out.println("Switched to: " + driver.getTitle());
+                // You can perform actions on the Bing tab now
+            }
+        
+        case 3: Iterate and switch based on title
+
+            import java.util.Set; // use this import statement when Set is used
+
+            System.out.println("\n--- Scenario 3: Iterating and switching based on title ---");
+            Set<String> allWindowHandles = driver.getWindowHandles(); // Get all open window handles
+
+            String targetWindowTitle = "w3school"; // The title of the window you want to switch to
+            String foundHandle = null;
+
+            for (String handle : allWindowHandles) {
+                if (!handle.equals(driver.getWindowHandle())) { // Don't switch to current window
+                    driver.switchTo().window(handle);
+                    System.out.println("Checking window: " + driver.getTitle() + " (Handle: " + handle + ")");
+                    if (driver.getTitle().contains(targetWindowTitle)) {
+                        foundHandle = handle;
+                        System.out.println("Found target window: " + driver.getTitle());
+                        break; // Found it, exit loop
+                    }
+                }
+            }
+
+            if (foundHandle != null) {
+                driver.switchTo().window(foundHandle); // Switch to the identified window
+                System.out.println("Successfully switched to Google: " + driver.getTitle());
+                // Perform actions on the Google window
+            } else {
+                System.out.println("Target window with title '" + targetWindowTitle + "' not found.");
+            }
+        
+        case 4: Using Iterator for more control (alternative to for-each)
+
+            import java.util.Iterator; // use this import statement when Iterator is used
+
+            System.out.println("\n--- Scenario 34 Using Iterator ---");
+            allWindowHandles = driver.getWindowHandles(); // Refresh handles if needed
+            Iterator<String> iterator = allWindowHandles.iterator();
+            while (iterator.hasNext()) {
+                String handle = iterator.next();
+                if (!handle.equals(mainWindowHandle)) { // Skip the main window
+                    driver.switchTo().window(handle);
+                    if (driver.getCurrentUrl().contains("duckduckgo.com")) {
+                        System.out.println("Switched to DuckDuckGo using URL: " + driver.getTitle());
+                        // Perform actions
+                        break; // Exit loop after finding and switching
+                    }
+                }
+            }
+
+        case 5: Switch to the first new window found
+
+           for (String handle : allWindowHandles) {
+                if (!handle.equals(mainWindowHandle)) { 
+                    driver.switchTo().window(handle);
+                    break; // Switch to the first new window found
+                }
+            }
+
+    // After operations on the new window, switch back to the main window
+        driver.switchTo().window(mainWindowHandle);
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+8.  Waits (Crucial for Robust Tests)
+
+    i.  Implicit Waits (configured once, applies globally)
+
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+        // No need to specify after this line, it applies to all findElement calls
+
+    ii.  Explicit Waits (recommended for specific conditions)
+
+        // Modern way using Duration
+
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+
+        // Wait until an element is visible
+
+            WebElement element = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("myElementId")));
+
+        // Wait until an element is clickable
+
+            WebElement button = wait.until(ExpectedConditions.elementToBeClickable(By.cssSelector(".myButtonClass")));
+            button.click();
+        
+        // Wait until text is present in an element
+
+            boolean textPresent = wait.until(ExpectedConditions.textToBePresentInElementLocated(By.xpath("//div[@id='status']"), "Success"));
+
+        // Wait until the title contains specific text
+
+            boolean titleContains = wait.until(ExpectedConditions.titleContains("Welcome"));
+        
+        // Wait until an alert is present
+
+            Alert myAlert = wait.until(ExpectedConditions.alertIsPresent());
+            myAlert.accept();
+
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+9.  Action Chains (For Complex User Interactions)
+
+    // Selenium WebDriver (Java) is used to instantiate the Actions class.
+
+        Actions actions = new Actions(driver);
+
+    // Perform a right-click (context click)
+
+        WebElement elementToRightClick = driver.findElement(By.id("myElement"));
+        actions.contextClick(elementToRightClick).perform();
+
+    // Perform a double-click
+
+        WebElement elementToDoubleClick = driver.findElement(By.id("myOtherElement"));
+        actions.doubleClick(elementToDoubleClick).perform();
+
+    // Hover over an element
+
+        WebElement elementToHover = driver.findElement(By.id("menuItem"));
+        actions.moveToElement(elementToHover).perform();
+
+    // Drag and drop
+
+        WebElement sourceElement = driver.findElement(By.id("draggable"));
+        WebElement targetElement = driver.findElement(By.id("droppable"));
+        actions.dragAndDrop(sourceElement, targetElement).perform();
+
+    // Send keys without a specific element focus (e.g., pressing ESC)
+
+        actions.sendKeys(Keys.ESCAPE).perform();
+
+    // Build a sequence of actions
+        actions.moveToElement(elementToHover)
+            .click(elementToClick)
+            .sendKeys("Some text")
+            .perform();
+
+

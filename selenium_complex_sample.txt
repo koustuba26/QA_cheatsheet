@@ -1,0 +1,142 @@
+Create a new package com.selenium.complex.tests and a Java class ECommerceTest inside it.
+
+src/test/java/com/selenium/complex/tests/ECommerceTest.java:
+
+package com.selenium.complex.tests;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.WindowType; // For Selenium 4 new window/tab
+import org.testng.Assert; // For assertions
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
+import java.time.Duration;
+import java.util.Iterator;
+import java.util.Set;
+
+public class ECommerceTest {
+
+    private WebDriver driver;
+    private WebDriverWait wait;
+    private Actions actions;
+
+    // Base URL for our hypothetical site
+    private final String BASE_URL = "https://ecommerce-playground.lambdatest.io/index.php?"; // A public demo site
+    // We'll use a public demo site for actual execution
+
+    // --- Test Setup ---
+    @BeforeMethod
+    public void setup() {
+        System.out.println("--- Setting up WebDriver ---");
+        // IMPORTANT: Set the path to your ChromeDriver executable
+        System.setProperty("webdriver.chrome.driver", "path/to/your/chromedriver.exe");
+        driver = new ChromeDriver();
+        driver.manage().window().maximize(); // Maximize browser window
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(5)); // Implicit wait for finding elements
+        wait = new WebDriverWait(driver, Duration.ofSeconds(15)); // Explicit wait for specific conditions
+        actions = new Actions(driver);
+    }
+
+    // --- Test Method ---
+    @Test
+    public void verifyProductSearchAndDetails() {
+        System.out.println("--- Starting verifyProductSearchAndDetails Test ---");
+
+        try {
+            // 1. Navigate to the login page (or homepage if login is pop-up/modal)
+            driver.get(BASE_URL + "route=account/login");
+            System.out.println("Navigated to: " + driver.getCurrentUrl());
+            Assert.assertTrue(driver.getTitle().contains("Account Login"), "Login page title mismatch!");
+
+            // 2. Perform Login
+            System.out.println("Attempting login...");
+            WebElement emailInput = wait.until(ExpectedConditions.visibilityOfElementLocated(By.id("input-email")));
+            emailInput.sendKeys("automation@gmail.com"); // Use a valid demo email
+            WebElement passwordInput = driver.findElement(By.id("input-password"));
+            passwordInput.sendKeys("automation"); // Use a valid demo password
+
+            WebElement loginButton = driver.findElement(By.xpath("//input[@value='Login']"));
+            loginButton.click();
+            System.out.println("Login button clicked.");
+
+            // 3. Verify successful login (e.g., check for "My Account" header)
+            wait.until(ExpectedConditions.urlContains("account/account"));
+            WebElement myAccountHeader = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h2[normalize-space()='My Account']")));
+            Assert.assertTrue(myAccountHeader.isDisplayed(), "Login failed: 'My Account' header not displayed.");
+            System.out.println("Login successful: " + myAccountHeader.getText() + " is displayed.");
+
+            // 4. Search for a product
+            System.out.println("Searching for product: 'HP'");
+            WebElement searchBox = driver.findElement(By.name("search"));
+            searchBox.sendKeys("HP");
+
+            // Click the search icon
+            WebElement searchIcon = driver.findElement(By.cssSelector("#search .fa.fa-search"));
+            searchIcon.click();
+
+            // 5. Verify search results
+            WebElement searchResultHeader = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h1[contains(text(), 'Search - HP')]")));
+            Assert.assertTrue(searchResultHeader.isDisplayed(), "Search results header not displayed.");
+            System.out.println("Search results loaded: " + searchResultHeader.getText());
+
+            // 6. Hover over a product image and click "Quick View" (if available, or direct click)
+            // For simplicity, let's just click on the first product link
+            WebElement firstProductLink = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='entry_212469']//div[contains(@class,'product-thumb')][1]//div[@class='carousel-item active']//img")));
+            // If the element is covered by something else, this click might fail.
+            // Let's try to click the product title link instead, which is usually more stable.
+            WebElement productTitleLink = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@id='entry_212469']//div[contains(@class,'product-thumb')][1]//div[@class='caption']//a")));
+            String productTitle = productTitleLink.getText();
+            System.out.println("Clicking on product: " + productTitle);
+            productTitleLink.click();
+
+            // 7. Verify product details page
+            WebElement productDetailsHeader = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//h1[normalize-space()='" + productTitle + "']")));
+            Assert.assertTrue(productDetailsHeader.isDisplayed(), "Product details header not displayed.");
+            System.out.println("On product details page for: " + productDetailsHeader.getText());
+
+            // 8. Open a new tab and navigate to a related page (e.g., Contact Us)
+            System.out.println("\n--- Handling Multiple Windows/Tabs ---");
+            String originalWindowHandle = driver.getWindowHandle(); // Get handle of current tab
+
+            // Open a new tab (Selenium 4+ way)
+            driver.switchTo().newWindow(WindowType.TAB);
+            driver.get(BASE_URL + "route=information/contact");
+            System.out.println("New tab opened. Title: " + driver.getTitle());
+            Assert.assertTrue(driver.getTitle().contains("Contact Us"), "New tab title mismatch!");
+
+            // 9. Switch back to the original product details tab
+            System.out.println("Switching back to original tab...");
+            driver.switchTo().window(originalWindowHandle);
+            Assert.assertTrue(driver.getTitle().contains(productTitle), "Failed to switch back to product page!");
+            System.out.println("Successfully switched back to: " + driver.getTitle());
+
+            // Example of an Action Chain (e.g., hover over an element)
+            // Not directly applicable here, but showing syntax:
+            // WebElement myElement = driver.findElement(By.id("someElement"));
+            // actions.moveToElement(myElement).perform();
+
+            System.out.println("Test 'verifyProductSearchAndDetails' completed successfully!");
+
+        } catch (Exception e) {
+            System.err.println("Test failed: " + e.getMessage());
+            e.printStackTrace();
+            Assert.fail("Test failed due to an exception: " + e.getMessage()); // Fail the TestNG test
+        }
+    }
+
+    // --- Test Teardown ---
+    @AfterMethod
+    public void teardown() {
+        System.out.println("--- Tearing down WebDriver ---");
+        if (driver != null) {
+            driver.quit(); // Close all browser windows and end WebDriver session
+        }
+    }
+}

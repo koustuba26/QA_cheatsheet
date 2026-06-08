@@ -1,0 +1,58 @@
+1. White Box Testing (Clear Box, Glass Box, Open Box, Structural Testing)
+
+Definition: White Box Testing is a software testing technique where the tester 
+    has full knowledge of the internal structure, design, and implementation 
+    details of the system being tested. This includes access to the source code,
+    architecture diagrams, and design documents. The focus is on the internal 
+    workings of the software.
+
+    Key Features:
+    Tester has full access to the source code.
+    Focuses on code coverage: paths, branches, loops, conditions.
+    Used for unit testing and integration testing
+
+    Techniques:
+    Statement coverage
+    Branch coverage
+    Path coverage
+    Condition coverage
+    
+    Advantages:
+    Detects hidden errors inside the code.
+    Helps optimize code.
+    High level of test coverage.
+
+2. Grey Box testing: 
+
+    Definition: Combines both white box and black box approaches. The tester has partial 
+    knowledge of the internal structure.
+
+    Key Features:
+    Tester knows some internal logic or architecture.
+    Focus on integration testing, penetration testing, and security testing.
+
+    Techniques:
+    Matrix testing
+    Regression testing
+    Pattern testing
+    Risk-based testing
+
+    Advantages:
+    Balanced approach; better test coverage than black box.
+    Effective in identifying context-specific issues.
+    Useful for security and web applications.
+
+3. Black Box Testing
+
+    Definition: Testing based only on input and output; the internal structure of the 
+    system is not known to the tester.
+
+    Key Features:
+    Focus on functional requirements.
+    Used in system testing, acceptance testing, etc.
+    Tests from the user’s perspective.
+
+    Advantages:
+    No programming knowledge required.
+    Useful for large-scale and UI-heavy applications.
+    Focuses on user experience.

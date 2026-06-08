@@ -1,0 +1,52 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions; // Important import
+
+public class ActionsClassExample {
+
+    public static void main(String[] args) {
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            driver.get("https://jqueryui.com/droppable/"); // Example website for drag and drop
+
+            // Switch to the iframe containing the draggable/droppable elements
+            driver.switchTo().frame(driver.findElement(By.className("demo-frame")));
+
+            // Locate the source and target elements
+            WebElement draggable = driver.findElement(By.id("draggable"));
+            WebElement droppable = driver.findElement(By.id("droppable"));
+
+            // Instantiate the Actions class
+            Actions actions = new Actions(driver);
+
+            // Perform drag and drop
+            System.out.println("Performing drag and drop...");
+            actions.dragAndDrop(draggable, droppable).perform();
+            System.out.println("Drag and drop completed.");
+
+            // Verify the change (e.g., text change)
+            if (droppable.getText().equals("Dropped!")) {
+                System.out.println("Successfully dropped the element!");
+            } else {
+                System.out.println("Failed to drop the element.");
+            }
+
+            // Example of a hover action (not on this page, hypothetical)
+            // driver.get("https://www.example.com/menu");
+            // WebElement menuOption = driver.findElement(By.id("menuItem"));
+            // WebElement subMenuOption = driver.findElement(By.id("subMenuItem"));
+            // actions.moveToElement(menuOption).moveToElement(subMenuOption).click().perform();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (driver != null) {
+                driver.quit();
+            }
+        }
+    }
+}

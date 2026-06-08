@@ -1,0 +1,43 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.Select;
+import java.time.Duration;
+
+public class StaticDropdownExample {
+    public static void main(String[] args) {
+        WebDriver driver = new ChromeDriver();
+        driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+
+        try {
+            // Navigate to the demo website
+            driver.get("https://demoqa.com/select-menu");
+            
+            // Find the static dropdown element (using the <select> tag)
+            WebElement selectElement = driver.findElement(By.id("oldSelectMenu"));
+            
+            // Create a Select object
+            Select select = new Select(selectElement);
+            
+            // Select an option using its visible text
+            select.selectByVisibleText("Purple");
+            System.out.println("Selected 'Purple' from the static dropdown.");
+            
+            // --- Verification step ---
+            WebElement firstSelected = select.getFirstSelectedOption();
+            String selectedText = firstSelected.getText();
+            
+            if (selectedText.equals("Purple")) {
+                System.out.println("Verification successful: 'Purple' is selected.");
+            } else {
+                System.out.println("Verification failed: Expected 'Purple', but found " + selectedText);
+            }
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            driver.quit();
+        }
+    }
+}

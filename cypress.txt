@@ -1,0 +1,239 @@
+1. The Absolute Essentials
+
+    cy.visit() - Navigates the browser to a specific URL. This is almost always the first command in a test.
+        example: 
+        cy.visit('https://www.google.com');
+
+        // You can also visit a relative path if you set a `baseUrl` in your cypress.config.js
+        // If baseUrl is "http://localhost:3000"
+        cy.visit('/login'); // Will go to http://localhost:3000/login
+        cy.visit('https://www.gmail.com/login');
+
+    -------------------------------------------------------------------------------
+
+    cy.get() - Gets one or more DOM elements by a CSS selector. This is the primary way you select elements to interact with.
+        example: 
+        // Get an element by its ID
+        cy.get('#main-header');
+        cy.get('#canvas');
+
+        // Get all elements with a class
+        cy.get('.list-item');
+        cy.get('button.submit');
+
+        // Get an input element by its attribute
+        cy.get('input[name="password"]');
+        cy.get('input[name="email"]');
+
+    -------------------------------------------------------------------------------
+
+2. Finding Elements (Querying)
+    
+    cy.contains() - Gets an element that contains specific text. This is great for finding buttons, links, or labels in a more user-friendly way.
+        example:
+            // Find any element with the text "Submit"
+            cy.contains('Submit');
+            cy.contains('payment');
+
+            // Find a button that contains the text "Add to Cart"
+            cy.get('button').contains('Add to Cart');
+            cy.get('button').contains('sign in');
+
+    -------------------------------------------------------------------------------
+
+3. Interacting with Elements (Actions)
+
+    cy.click() - Clicks on a DOM element.
+        example:
+            cy.get('button.submit').click();
+            cy.get('textbutton.hotdeals').click();
+
+            // Click on the top-left corner of an element
+            cy.get('#canvas').click('topLeft');
+
+            // Click on multiple elements
+            cy.get('input[type="checkbox"]').click({ multiple: true });
+            cy.get('input[type="radio"]').click();
+    
+    -------------------------------------------------------------------------------
+
+    cy.type() - Types text into an input, textarea, or any focusable element.
+        example:
+            cy.get('#email-input').type('my.email@domain.com');
+            cy.get('#firstname-input').type('shamili');
+
+            // You can also type special key combinations
+            cy.get('#search').type('Hello, World{enter}'); // Types text and presses Enter
+            cy.get('#search').type('what is cypress{enter}');
+    
+    -------------------------------------------------------------------------------
+
+    cy.clear() - Clears the value of an input or textarea.
+        example:
+            cy.get('#email-input').type('some text').clear(); // Now the input is empty
+            cy.get('#search').type('what is cypress').clear();
+    
+    -------------------------------------------------------------------------------
+
+    cy.select() - Selects an <option> within a <select> dropdown.
+        example:
+            // Select by the value attribute
+            cy.get('select.country-selector').select('USA');
+            cy.get('select.etinicity-selector').select('south-asian');
+
+            // Select by the text content
+            cy.get('select.country-selector').select('Canada');
+            cy.get('select.gender-selector').select('female');
+    
+    -------------------------------------------------------------------------------
+
+    cy.check() & cy.uncheck() - Checks or unchecks a checkbox or radio button.
+        example:
+            // Check a single checkbox
+            cy.get('input[type="checkbox"]').check();
+            cy.get('input[type="radio"]').check('keep me logged in');
+
+            // Uncheck it
+            cy.get('input[type="checkbox"]').uncheck();
+            cy.get('input[type="checkbox"]').uncheck('notifications');
+
+            // Check a radio button by its value
+            cy.get('input[type="radio"]').check('admin');
+    
+    -------------------------------------------------------------------------------
+
+4. Assertions (Verifying Behavior)
+
+    Assertions are the most important part of a test—they verify that your application is in the correct state. All assertions use the .should() command.
+    .should()
+    Creates an assertion. It's always chained off another command, like cy.get().
+
+    Common Assertions:
+
+    be.visible - Asserts that the element is visible on the page.
+        example:
+            cy.get('.error-message').should('be.visible');
+            cy.get('.username').should('be.visible');
+    
+    -------------------------------------------------------------------------------
+
+    not.exist: Asserts that the element is not in the DOM.
+        example:
+            cy.get('.success-modal').should('not.exist');
+            cy.get('.login').should('not.exist');
+    
+    -------------------------------------------------------------------------------
+
+    include.text: Asserts that the element's text contains a substring.
+        example:
+            cy.get('p').should('include.text', 'successfully');
+            cy.get('#xyz').should('include.text', 'shamili');
+    
+    -------------------------------------------------------------------------------
+
+    have.class: Asserts that the element has a specific CSS class.
+        example:
+            cy.get('button').should('have.class', 'btn-primary');
+            cy.get('textbox').should('have.class', 'txb-primary');
+    
+    -------------------------------------------------------------------------------
+
+    have.value: Asserts that an input element has a specific value.
+        example:
+            cy.get('input[name="email"]').should('have.value', 'my.email@domain.com');
+            cy.get('input[neme="firstname"]').shoud('have.value', 'shamili');
+
+    -------------------------------------------------------------------------------
+
+    be.disabled / be.enabled: Checks if a button or input is disabled.
+        example:
+            cy.get('button.submit').should('be.disabled');
+            cy.get('button').contains('place order').should('be.disabled');
+    
+    -------------------------------------------------------------------------------
+
+5. Browser and Page Commands
+
+    cy.url() - Gets the current URL of the page. You typically chain .should() off it.
+        example:
+            cy.url().should('include', '/dashboard'); // Asserts the URL contains '/dashboard'
+    
+    -------------------------------------------------------------------------------
+
+    cy.title() - Gets the title of the current page (<title> tag).
+        example:
+            cy.title().should('eq', 'My App | Dashboard'); // 'eq' means 'equal to'
+    
+    -------------------------------------------------------------------------------
+
+    cy.reload() - Reloads the page, just like the browser's refresh button.
+        example:
+            cy.reload();
+    
+------------------------------------------------------------------------------------
+
+A Complete, Simple Example
+
+    example 1:
+        // File: cypress/e2e/login_spec.cy.js
+
+        describe('Login Page', () => {
+        it('should allow a user to log in and see the dashboard', () => {
+            // 1. Visit the login page
+            cy.visit('/login');
+
+            // 2. Find the email input, type in it, and check its value
+            cy.get('input[name="email"]')
+            .type('testuser@example.com')
+            .should('have.value', 'testuser@example.com');
+
+            // 3. Find the password input and type in it
+            cy.get('input[name="password"]').type('password123');
+
+            // 4. Find the "Log In" button and click it
+            cy.get('button').contains('Log In').click();
+
+            // 5. Assert that the URL has changed to the dashboard
+            cy.url().should('include', '/dashboard');
+
+            // 6. Assert that the dashboard welcome message is visible
+            cy.get('h1').should('have.text', 'Welcome, Test User!');
+        });
+        });
+    
+    -------------------------------------------------------------------------------
+
+    example 2:
+        // A test is written inside a describe() block
+        describe('My First Test', () => {
+
+        // An individual test case is written with it()
+        it('Visits the kitchen sink and finds an element', () => {
+            
+            // 1. Visit a web page
+            cy.visit('https://example.cypress.io');
+            
+            // 2. Query for an element by its CSS selector
+            cy.contains('type');
+            
+            // 3. Click on that element
+            cy.contains('type').click();
+            
+            // 4. Assert that the URL is now correct
+            cy.url().should('include', '/commands/actions');
+            
+            // 5. Get an input, type into it, and assert the value
+            cy.get('.action-email')
+            .type('fake@email.com')
+            .should('have.value', 'fake@email.com');
+        });
+        });
+    
+    -------------------------------------------------------------------------------
+
+
+
+
+
+
+

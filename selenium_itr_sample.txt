@@ -1,0 +1,98 @@
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WindowType; // For creating new tabs/windows (Selenium 4+)
+import org.openqa.selenium.chrome.ChromeDriver;
+
+import java.util.Set;
+import java.util.Iterator;
+
+public class WindowHandleIteration {
+
+    public static void main(String[] args) {
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver.exe");
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            // 1. Open the main window
+            driver.get("https://www.google.com");
+            String mainWindowHandle = driver.getWindowHandle();
+            System.out.println("Main Window Title: " + driver.getTitle() + ", Handle: " + mainWindowHandle);
+
+            // 2. Open a new tab/window (Selenium 4+ specific)
+            driver.switchTo().newWindow(WindowType.TAB);
+            driver.get("https://www.bing.com");
+            String bingWindowHandle = driver.getWindowHandle(); // Get handle of new tab
+            System.out.println("Bing Tab Title: " + driver.getTitle() + ", Handle: " + bingWindowHandle);
+
+
+            driver.switchTo().newWindow(WindowType.WINDOW); // Open a new window (separate browser window)
+            driver.get("https://www.duckduckgo.com");
+            String duckduckgoWindowHandle = driver.getWindowHandle(); // Get handle of new window
+            System.out.println("DuckDuckGo Window Title: " + driver.getTitle() + ", Handle: " + duckduckgoWindowHandle);
+
+            // --- Scenario 1: You know the specific handle identifier ---
+            // Let's say you want to switch back to the Bing tab using its handle
+            System.out.println("\n--- Scenario 1: Switching using a known handle ---");
+            if (bingWindowHandle != null) {
+                driver.switchTo().window(bingWindowHandle);
+                System.out.println("Switched to: " + driver.getTitle());
+                // You can perform actions on the Bing tab now
+            }
+
+
+            // --- Scenario 2: Iterate and switch based on title ---
+            System.out.println("\n--- Scenario 2: Iterating and switching based on title ---");
+            Set<String> allWindowHandles = driver.getWindowHandles(); // Get all open window handles
+
+            String targetWindowTitle = "Google"; // The title of the window you want to switch to
+            String foundHandle = null;
+
+            for (String handle : allWindowHandles) {
+                if (!handle.equals(driver.getWindowHandle())) { // Don't switch to current window
+                    driver.switchTo().window(handle);
+                    System.out.println("Checking window: " + driver.getTitle() + " (Handle: " + handle + ")");
+                    if (driver.getTitle().contains(targetWindowTitle)) {
+                        foundHandle = handle;
+                        System.out.println("Found target window: " + driver.getTitle());
+                        break; // Found it, exit loop
+                    }
+                }
+            }
+
+            if (foundHandle != null) {
+                driver.switchTo().window(foundHandle); // Switch to the identified window
+                System.out.println("Successfully switched to Google: " + driver.getTitle());
+                // Perform actions on the Google window
+            } else {
+                System.out.println("Target window with title '" + targetWindowTitle + "' not found.");
+            }
+
+            // Always switch back to the main window or a known window when done with others
+            driver.switchTo().window(mainWindowHandle);
+            System.out.println("\nSwitched back to Main Window: " + driver.getTitle());
+
+            // --- Scenario 3: Using Iterator for more control (alternative to for-each) ---
+            System.out.println("\n--- Scenario 3: Using Iterator ---");
+            allWindowHandles = driver.getWindowHandles(); // Refresh handles if needed
+            Iterator<String> iterator = allWindowHandles.iterator();
+            while (iterator.hasNext()) {
+                String handle = iterator.next();
+                if (!handle.equals(mainWindowHandle)) { // Skip the main window
+                    driver.switchTo().window(handle);
+                    if (driver.getCurrentUrl().contains("duckduckgo.com")) {
+                        System.out.println("Switched to DuckDuckGo using URL: " + driver.getTitle());
+                        // Perform actions
+                        break; // Exit loop after finding and switching
+                    }
+                }
+            }
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            if (driver != null) {
+                driver.quit();
+            }
+        }
+    }
+}

@@ -1,0 +1,324 @@
+{\rtf1\ansi\deff0\nouicompat{\fonttbl{\f0\fnil\fcharset0 Courier New;}}
+{\colortbl ;\red0\green77\blue187;\red155\green0\blue211;\red255\green0\blue0;\red0\green0\blue255;\red255\green192\blue0;\red0\green0\blue0;}
+{\*\generator Riched20 10.0.19041}\viewkind4\uc1 
+\pard\cf1\b\f0\fs22\lang1033 1. The Absolute Essentials\par
+
+\pard\cf0\par
+    \cf1 cy.visit() \cf0 - \cf2 Navigates the browser to a specific URL. This \tab\tab\tab\tab is almost always the first command in a test.\cf0\par
+\par
+        \cf3 example: \par
+\cf0\par
+        \cf1 cy.visit('https://www.google.com');\par
+\cf0\par
+        \cf2 // You can also visit a relative path if you set a \tab\tab\tab `baseUrl` in your cypress.config.js\par
+        // If baseUrl is "{{\field{\*\fldinst{HYPERLINK http://localhost:3000 }}{\fldrslt{http://localhost:3000\ul0\cf0}}}}\f0\fs22 "\cf5\par
+\cf0         \par
+\tab   \cf1 cy.visit('/login'); \cf0\par
+\par
+\tab   \cf2 // Will go to {{\field{\*\fldinst{HYPERLINK http://localhost:3000/login }}{\fldrslt{http://localhost:3000/login\ul0\cf0}}}}\f0\fs22\par
+\cf0        \par
+\tab   \cf1 cy.visit('https://www.gmail.com/login');\par
+\cf0\par
+----------------------------------------------------------------\par
+\par
+    \cf1 cy.get() \cf0 - \cf2 Gets one or more DOM elements by a CSS selector. \tab\tab     This is the primary way you select elements to   \tab\tab\tab     interact with.\par
+\cf0\par
+        \cf3 example: \cf0\par
+\par
+        \cf2 // Get an element by its ID\par
+\cf0         \par
+\tab    \cf1 cy.get('#main-header');\par
+\tab    cy.get('#canvas');\par
+\cf0\par
+        \cf2 // Get all elements with a class\cf0\par
+\par
+        \cf1 cy.get('.list-item');\par
+        cy.get('button.submit');\par
+\cf0\par
+        \cf2 // Get an input element by its attribute\par
+\cf0\par
+        \cf1 cy.get('input[name="password"]');\par
+        cy.get('input[name="email"]');\par
+\cf0\par
+----------------------------------------------------------------\par
+\par
+\cf1 2. Finding Elements (Querying)\par
+\cf0     \par
+    \cf1 cy.contains() \cf0 - \cf2 Gets an element that contains specific text. \tab\tab\tab     This is great for finding buttons, links, or \tab\tab\tab     labels in a more user-friendly way.\par
+\cf0         \cf3 example:\cf0\par
+\par
+            \cf2 // Find any element with the text "Submit"\par
+\cf0\par
+            \cf1 cy.contains('Submit');\par
+            cy.contains('payment');\par
+\cf0\par
+            \cf2 // Find a button that contains the text "Add to \tab\tab\tab     Cart"\cf0\par
+\par
+            \cf1 cy.get('button').contains('Add to Cart');\par
+            cy.get('button').contains('sign in');\par
+\cf0\par
+----------------------------------------------------------------\par
+\par
+\cf1 3. Interacting with Elements (Actions)\par
+\cf0\par
+    \cf1 cy.click() \cf0 - \cf2 Clicks on a DOM element.\par
+\cf0\par
+        \cf3 example:\par
+\cf0\par
+            \cf1 cy.get('button.submit').click();\par
+            cy.get('textbutton.hotdeals').click();\cf0\par
+\par
+            \cf2 // Click on the top-left corner of an element\par
+\par
+\cf0             \cf1 cy.get('#canvas').click('topLeft');\par
+\cf0\par
+            \cf2 // Click on multiple elements\par
+\cf0\par
+            \cf1 cy.get('input[type="checkbox"]').click(\{ multiple:\par
+\tab\tab   true \});\par
+            cy.get('input[type="radio"]').click();\par
+\cf0     \par
+----------------------------------------------------------------\par
+\par
+    \cf1 cy.type()\cf0  - \cf2 Types text into an input, textarea, or any \tab\tab\tab\tab focusable element.\par
+\par
+\cf0         \cf3 example:\par
+\cf0\par
+            \cf1 cy.get('#email-input').type('my.email@domain.com');\par
+            cy.get('#firstname-input').type('shamili');\par
+\cf2\par
+            // You can also type special key combinations\cf0\par
+\par
+            \cf1 cy.get('#search').type('Hello, World\{enter\}'); \cf0\par
+\par
+\tab\tab  \cf2 // Types text and presses Enter\par
+\cf0\par
+            \cf1 cy.get('#search').type('what is cypress\{enter\}');\cf0\par
+    \par
+----------------------------------------------------------------\par
+\par
+    \cf1 cy.clear() \cf0 - \cf2 Clears the value of an input or textarea.\cf0\par
+\par
+        \cf3 example:\par
+\cf0\par
+            \cf1 cy.get('#email-input').type('some text').clear(); \par
+\cf0\par
+\tab\tab  \cf2 // Now the input is empty\cf0\par
+\par
+            \cf1 cy.get('#search').type('what is cypress').clear();\par
+\cf0     \par
+----------------------------------------------------------------\par
+\par
+    \cf1 cy.select() \cf0 - \cf2 Selects an <option> within a <select> \tab\tab\tab\tab\tab   dropdown.\par
+\cf0\par
+        \cf3 example:\par
+\cf0\par
+            \cf2 // Select by the value attribute\par
+\cf0\par
+            \cf1 cy.get('select.country-selector').select('USA');\par
+            cy.get('select.etinicity-selector').select('south-\tab\tab\tab   asian');\cf0\par
+\par
+            \cf2 // Select by the text content\par
+\cf0\par
+            \cf1 cy.get('select.country-selector').select('Canada');\par
+            cy.get('select.gender-selector').select('female');\par
+\cf0     \par
+----------------------------------------------------------------\par
+\par
+    \cf1 cy.check() & cy.uncheck() \cf0 - \cf2 Checks or unchecks a checkbox or \tab\tab\tab\tab\tab\tab radio button.\par
+\cf0\par
+        \cf3 example:\par
+\cf0\par
+            \cf2 // Check a single checkbox\par
+\cf0\par
+            \cf1 cy.get('input[type="checkbox"]').check();\par
+            cy.get('input[type="radio"]').check('keep me logged \tab\tab   in');\par
+\cf0\par
+            \cf2 // Uncheck it\par
+\cf0\par
+            \cf1 cy.get('input[type="checkbox"]').uncheck();\par
+\tab\tab  cy.get('input[type="checkbox"]').uncheck('notificati\par
+\tab\tab  ons');\par
+\cf0\par
+            \cf2 // Check a radio button by its value\par
+\cf0\par
+            \cf1 cy.get('input[type="radio"]').check('admin');\par
+\cf0     \par
+----------------------------------------------------------------\par
+\par
+\cf1 4. Assertions (Verifying Behavior) \cf6 - \cf2 Assertions are the most \tab important part of a test they verify that your application \tab is in the correct state. All assertions use the .should() \tab command.\par
+\cf0\tab\par
+\tab\cf1 .should()  \cf0 - \cf2 Creates an assertion. It's always chained off \tab\tab\tab    another command, like cy.get().\par
+\cf0\par
+    \cf1 Common Assertions:\cf0\par
+\par
+    \cf1 be.visible \cf0 - \cf2 Asserts that the element is visible on the \tab\tab\tab\tab  page.\par
+\cf0\par
+        \cf3 example:\par
+\cf0\par
+            \cf1 cy.get('.error-message').should('be.visible');\par
+            cy.get('.username').should('be.visible');\cf0\par
+    \par
+----------------------------------------------------------------\par
+\par
+    \cf1 not.exist \cf0 - \cf2 Asserts that the element is not in the DOM.\par
+\cf0\par
+        \cf3 example:\par
+\cf0\par
+            \cf1 cy.get('.success-modal').should('not.exist');\par
+            cy.get('.login').should('not.exist');\par
+\cf0     \par
+----------------------------------------------------------------\par
+\par
+    \cf1 include.text \cf0 - \cf2 Asserts that the element's text contains a \tab\tab\tab\tab    substring.\par
+\cf0\par
+        \cf3 example:\par
+\cf0\par
+            \cf1 cy.get('p').should('include.text', 'successfully');\par
+            cy.get('#xyz').should('include.text', 'shamili');\par
+\cf0     \par
+----------------------------------------------------------------\par
+\par
+    \cf1 have.class \cf0 - \cf2 Asserts that the element has a specific CSS \tab\tab\tab\tab  class.\par
+\cf0\par
+        \cf3 example:\par
+\cf0\par
+            \cf1 cy.get('button').should('have.class', 'btn-\tab\tab\tab\tab   primary');\par
+            cy.get('textbox').should('have.class', 'txb-\tab\tab\tab\tab   primary');\cf0\par
+    \par
+----------------------------------------------------------------\par
+\par
+
+\pard     \cf1 have.value \cf0 - \cf2 Asserts that an input element has a specific \tab\tab\tab\tab  value.\par
+
+\pard\cf0\par
+        \cf3 example:\par
+\cf0\par
+            \cf1 cy.get('input[name="email"]').should('have.value', \tab\tab\tab\tab 'my.email@domain.com');\par
+            cy.get('input[neme="fstname"]').shoud('have.value',\par
+\tab\tab\tab 'shamili');\par
+\cf0\par
+----------------------------------------------------------------\par
+\par
+    \cf1 be.disabled / be.enabled \cf0 - \cf2 Checks if a button or input is \tab\tab\tab\tab\tab\tab     disabled.\par
+\cf0\par
+        \cf3 example:\par
+\cf0\par
+            \cf1 cy.get('button.submit').should('be.disabled');\par
+            cy.get('button').contains('place order')\par
+\tab\tab\tab .should('be.disabled');\cf0\par
+    \par
+----------------------------------------------------------------\par
+\par
+\cf1 5. Browser and Page Commands\par
+\cf0\par
+    \cf1 cy.url() \cf0 - \cf2 Gets the current URL of the page. You typically \tab\tab\tab     chain .should() off it.\par
+\cf0\par
+        \cf3 example:\par
+\tab\tab\par
+\tab\tab  \cf2 // Asserts the URL contains '/dashboard'\cf3\par
+\par
+\cf0             \cf1 cy.url().should('include', '/dashboard');\cf2\par
+\cf0     \par
+----------------------------------------------------------------\par
+\par
+    \cf1 cy.title() \cf0 - \cf2 Gets the title of the current page (<title> \tab\tab\tab\tab  tag).\par
+\cf0\par
+        \cf3 example:\par
+\cf0\tab\par
+\tab\tab  \cf2 // 'eq' means 'equal to'\par
+\cf0\par
+            \cf1 cy.title().should('eq', 'My App | Dashboard'); \cf0\par
+    \par
+----------------------------------------------------------------\par
+\par
+    \cf1 cy.reload() \cf0 - \cf2 Reloads the page, just like the browser's \tab\tab\tab\tab   refresh button.\par
+\par
+\cf0         \cf3 example:\par
+\cf0\par
+            \cf1 cy.reload();\par
+\cf0     \par
+----------------------------------------------------------------\par
+\par
+\cf1 A Complete, Simple Example\par
+\cf0\par
+    \cf3 example 1:\par
+\cf0\par
+        \cf2 // File: cypress/e2e/login_spec.cy.js\par
+\cf0\par
+        \cf1 describe('Login Page', () => \{\par
+        it('should allow a user to log in and see the \tab\tab\tab\tab dashboard', () => \{\par
+\cf0\par
+            \cf2 // 1. Visit the login page\cf0\par
+\par
+            \cf1 cy.visit('/login');\cf0\par
+\par
+            \cf2 // 2. Find the email input, type in it, and check \tab\tab\tab\tab its value\par
+\cf0\par
+            \cf1 cy.get('input[name="email"]')\par
+            .type('testuser@example.com')\par
+            .should('have.value', 'testuser@example.com');\par
+\cf0\par
+            \cf2 // 3. Find the password input and type in it\par
+\cf0            \tab\tab  \tab\tab\tab\tab\tab\tab\tab\tab\tab\tab  \cf1 cy.get('input[name="passwd"]').type('xyz');\cf0\par
+\par
+            \cf2 // 4. Find the "Log In" button and click it\par
+\cf0\par
+            \cf1 cy.get('button').contains('Log In').click();\par
+\cf0\par
+            \cf2 // 5. Assert that the URL has changed to the \tab\tab\tab\tab\tab dashboard\par
+\cf0\par
+            \cf1 cy.url().should('include', '/dashboard');\cf0\par
+\par
+            \cf2 // 6. Assert that the dashboard welcome message is \tab\tab\tab\tab visible\cf0\par
+\par
+            \cf1 cy.get('h1').should('have.text', 'Welcome, Test \tab\tab\tab\tab\tab\tab\tab User!');\par
+        \});\par
+        \});\par
+\cf0     \par
+----------------------------------------------------------------\par
+\par
+    \cf3 example 2:\par
+\cf0\par
+        \cf2 // A test is written inside a describe() block\par
+\cf0\par
+        \cf1 describe('My First Test', () => \{\par
+\cf0\par
+        \cf2 // An individual test case is written with it()\par
+\cf0         \cf1 it('Visits the kitchen sink and finds an element', () => \tab\tab\{\par
+\cf0             \par
+            \cf2 // 1. Visit a web page\par
+\cf0\par
+            \cf1 cy.visit('https://example.cypress.io');\cf0\par
+            \par
+            \cf2 // 2. Query for an element by its CSS selector\cf0\par
+\par
+            \cf1 cy.contains('type');\par
+\cf0             \par
+            \cf2 // 3. Click on that element\par
+\cf0\par
+            \cf1 cy.contains('type').click();\par
+\cf0             \par
+            \cf2 // 4. Assert that the URL is now correct\cf0\par
+\par
+            \cf1 cy.url().should('include', '/commands/actions');\par
+\cf0             \par
+            \cf2 // 5. Get an input, type into it, and assert the \tab\tab\tab\tab value\par
+\cf0\par
+            \cf1 cy.get('.action-email')\par
+            .type('fake@email.com')\par
+            .should('have.value', 'fake@email.com');\par
+        \});\par
+        \});\par
+\cf0     \par
+----------------------------------------------------------------\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+\par
+}
+ 

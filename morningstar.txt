@@ -1,0 +1,163 @@
+About Morningstar:
+
+    1. morningstar is global leader in provide research data and analysis about inverstments. 
+    2. morningstar serve trasperant, relaiable and accessable inverstment information to customers.
+    3. morningstar has 60 external products to help investors and financial advisors.
+    4. morningstar recently lanched AI assistant tool name 'MO' and it is built using LangGraph's 
+        multi-agent workflows.
+
+What is MO?
+
+    1. MO is an itelligence engine and it is built using LangGraph's multi-agent workflows.
+    2. Mo scales around entire organization data for find right information to inverstors.
+    3. Mo is designed to cater specific needs of users for each morningstar products.
+    4. Before MO inverstor needs to navigate through 100s of morningstar rearch articles to make informed 
+        investment decisions. Now with MO, it gather information and gives actualable and verifiable information
+        to the investors
+
+What is LangGraph's multi-agent workflows?
+
+    LangGraph's multi-agent workflows involve using a graph-based structure to define how multiple AI 
+    agents, each with their own unique capabilities, interact and collaborate to achieve a common goal. 
+    In essence, LangGraph allows you to model complex workflows by representing agents as nodes in 
+    a graph and defining the relationships and flow of information between them as edges.
+
+How many brands/products Morningstar own?
+    
+    Morningstar owns 5 brands, the following are morningstar brands
+    1. Morningstar Data+Analytics
+    2. Morningstar Wealth
+    3. Morningstar Credit
+    4. Morningstar Retirement
+    5. Morningstar Indexes
+    Among these brands each brands there are multiple products to cater investor's needs. A total of 61
+    products are available for investors provided by morningstar.
+
+What does Morningstar Data+Analytics do?
+
+    Morningstar Data+Analytics provides investment research, data, and analytics to help investors 
+    and financial professionals make informed decisions. They offer a range of services, including 
+    data on managed investment products, publicly listed companies, and private capital markets, 
+    as well as tools for portfolio analysis and risk management. 
+
+    products of Morningstar Data+Analytics:
+
+    Morningstar Direct: A global investment analysis application that is combined with Morningstar
+                        data and research with analytics, data science, and productivity tools. 
+    
+    Morningstar Licensed Data: Coverage of registered and unregistered managed investments from 
+                               around the world, global company and share class data, and exclusive 
+                               analytics.
+    
+    Published System: Fully outsourced production of print-quality factsheets, branded digital reports, 
+                      and regulatory documents.
+    
+    Direct Web Service: A collection of portfolio analytics and investment research APIs that can power
+                        world-class online experiences that drive meaningful client engagement.
+    
+    Essentials: A licensing package of Morningstar ratings and intellectual property built for asset 
+                managers’ marketing, sales distribution, and product teams.
+    
+    Licensed research: Direct access to Morningstar’s industry-leading research, delivered the way 
+                       you want it.
+    
+    Investing Center: Empower patrons’ investment knowledge. Morningstar’s investment research center 
+                      can help  library members grasp a broad range of investment opportunities.
+    
+    Direct Reporting: Custom reporting and distribution solutions for every stage of your business.
+    
+    Direct Advisory Suite: A powerful suite of capabilities designed to help financial advisors 
+                           deliver great advice at scale.
+
+What does Morningstar Wealth do?
+
+    Morningstar Wealth provides services and technology to financial advisors and their clients, 
+    aiming to improve investment outcomes and streamline operations. They offer tools for portfolio 
+    construction, investment analysis, and client relationship management, all designed to help advisors 
+    manage their practices more effectively and help clients achieve their financial goals. 
+
+    products of Morningstar Wealth:
+
+    Morningstar Investment Management: A suite of professionally managed model portfolios with separately 
+                                       managed accounts, asset allocation, and outcome-based strategies to 
+                                       help clients reach investment goals.
+    
+    Morningstar Office: A fully integrated practice and portfolio management platform for RIA firms. 
+                        Advisors can combine data, insights, and tools to give personalized advice and 
+                        grow their firm.
+    
+    ByAllAccounts: High-quality investor financial account aggregation and advisor book-of-business data 
+                   to equip advisors with valuable insights for actionable financial advice and reporting.
+
+What does Morningstar Credit do?
+
+    Morningstar Credit provides independent credit ratings, data, and analytics solutions to empower 
+    decision-makers in the credit markets. They offer insights and tools to help understand risks and 
+    opportunities in structured finance transactions, financial institutions, and corporate entities. 
+    Morningstar Credit aims to increase transparency and responsiveness in credit markets by leveraging 
+    technology and providing timely analysis.
+
+     products of Morningstar Wealth:
+
+     DBRS Credit Ratings: Gain timely market insights and assess the credit risk of corporate and 
+                          sovereign entities, financial institutions, and project and structured finance 
+                          transactions globally. 
+
+    DBRS RatingsNow: Reduce risk and create efficiency with automated delivery of Morningstar DBRS’ global 
+                     ratings data into your company’s database with real-time, daily, or monthly updates.
+
+    CRE Analytics: Monitor changes and trends across CMBS deals, easily find CRE opportunities, access 
+                   comprehensive CMBS data, and organize all reports and deal documentation in one 
+                   platform.
+
+    Bank Analytics: Assess how changes in underlying financials and company and market parameters might 
+                    affect the credit risk of a financial institution with an easy-to-use interactive tool.
+
+    Corporate Analytics: Evaluate the credit risk on your portfolio of global corporate entities using the 
+                         latest financial data and forecasts from Morningstar—over 40,000 entities 
+                         supported.
+
+What does Morningstar Retirement do?
+
+    Morningstar Retirement provides research- and technology-driven products and services to help 
+    individuals reach their retirement goals. They offer advisory services, particularly through 
+    Morningstar Investment Management LLC, to workplace retirement plans and other industry partners. 
+    Their goal is to improve retirement outcomes by providing personalized advice and investment management 
+    solutions.
+
+    products of Morningstar Retirement:
+
+    Morningstar Retirement Manager: Provide a professional retirement strategy for employees. Managed accounts 
+                                    deliver personalized advice on how much to save, which investments to choose, 
+                                    and when to retire. 
+
+    Plan Advantage: Streamline your retirement plan business. Prospect and obtain pricing, manage plan lineups, 
+                    and access detailed investment information all in one place.
+
+    Advisor Managed Accounts: Take your advisory services to the next level. Attract new clients, create 
+                              plan-specific investment portfolios, and connect with a wide range of recordkeepers.
+
+    Fiduciary Services: Designed to ease fiduciary risk. Leverage Morningstar’s in-depth expertise to build 
+                        diversified lineups, monitor selected funds, and create comprehensive portfolio reports.
+
+    Target-Date Services: Build diversified portfolios with greater customization. Choose from a variety of asset 
+                          classes and select a path that aligns with employees’ risk profiles.
+
+    Center for Retirement & Policy Studies: Informing decision makers with unbiased and actionable analysis to help 
+                                            improve the U.S. retirement system. The Center provides featured research, 
+                                            white papers, and more.
+    
+    Personal Target-Date Fund Service: Modernize your target-date offerings. A personalized retirement strategy 
+                                       combined with the simplicity of a target-date fund.
+
+What does Morningstar Indexes do?
+
+    To create robust asset allocation and measurement tools, Morningstar's research team designed the indexes to 
+    satisfy the following objectives: Broadly represent the market without sacrificing investability. Consistently 
+    measure stocks' value and growth orientation in line with market practitioners and stock analysts.
+
+    products of Morningstar Indexes:
+
+
+
+ 

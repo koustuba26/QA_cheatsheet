@@ -1,0 +1,31 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.FluentWait;
+import java.time.Duration;
+import java.util.NoSuchElementException;
+
+public class PetWiki {
+    public static String getLoadedData(WebDriver driver) {
+        try {
+            WebElement loadButton = driver.findElement(By.id("load-button"));
+            loadButton.click();
+
+            FluentWait<WebDriver> wait = new FluentWait<>(driver)
+                    .withTimeout(Duration.ofSeconds(2))
+                    .pollingEvery(Duration.ofMillis(500))
+                    .ignoring(NoSuchElementException.class);
+
+            wait.until(d -> {
+                WebElement button = d.findElement(By.id("load-button"));
+                return button.isEnabled();
+            });
+
+            WebElement contentText = driver.findElement(By.id("content"));
+            String text = contentText.getText();
+            return text;
+        } catch (Exception e) {
+            return null;
+        }
+    }
+}

@@ -1,0 +1,73 @@
+ServiceNow is a cloud-based platform designed to help organizations manage digital workflows for enterprise operations. It provides a wide range of tools and services that allow businesses to streamline and automate routine processes, improving efficiency and service delivery.
+
+Key Features of ServiceNow:
+IT Service Management (ITSM):
+
+Automates IT support tasks like incident, problem, change, and asset management.
+
+Commonly used by IT departments to track and resolve technical issues.
+
+IT Operations Management (ITOM):
+
+Helps monitor and manage infrastructure, including servers, networks, and applications.
+
+IT Business Management (ITBM):
+
+Aligns IT services with business goals through portfolio management, demand management, and resource planning.
+
+Customer Service Management (CSM):
+
+Enhances customer support through case management, omnichannel engagement, and self-service portals.
+
+HR Service Delivery:
+
+Simplifies HR processes like onboarding, payroll, and employee inquiries.
+
+Security Operations (SecOps):
+
+Helps detect, assess, and respond to security threats using automated workflows.
+
+Now Platform App Engine:
+
+A low-code/no-code environment for building custom applications and workflows.
+
+Who Uses It?
+Large enterprises and mid-sized companies across industries like finance, healthcare, manufacturing, and government.
+
+IT departments, HR teams, customer support centers, and developers.
+
+Benefits:
+Centralized service management.
+
+Automation of repetitive tasks.
+
+Improved visibility and accountability.
+
+Scalability and integration with other tools like Microsoft Teams, Slack, and AWS.
+
+Problem:
+Employees were emailing or calling IT for help, leading to delays, lost tickets, and no tracking.
+
+With ServiceNow:
+
+Employees open tickets via a self-service portal.
+
+Tickets are automatically categorized and routed to the right IT team.
+
+ServiceNow uses AI to suggest solutions and reduce workload.
+
+Dashboards show open, resolved, and overdue tickets.
+
+2. Employee Onboarding – HR Service Delivery:
+Problem:
+New hires faced delays getting laptops, accounts, and access to tools.
+
+With ServiceNow:
+
+HR triggers an automated onboarding workflow.
+
+IT is alerted to prepare equipment.
+
+Security sets up access permissions.
+
+The new employee gets a personalized checklist via the portal.

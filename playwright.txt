@@ -1,0 +1,196 @@
+// Good Practice: Create a locator once and reuse it
+    const emailInput = page.locator('input[name="email"]');
+    const passwardInput = page.locator('input[name="password"]');
+// Now perform actions on the locator
+    await emailInput.fill('test@example.com');
+    await emailInput.press('Enter');
+    await passwardInput.fill('xyz');
+    await passwardInput.press('Enter');
+
+--------------------------------------------------------------------------------------------------------------
+
+1. The Absolute Essentials (Every test needs these)
+
+    page.goto() - Navigates the page to a specific URL. This is almost always the first command in a test.
+        // Full URL
+        await page.goto('https://www.google.com');
+        await page.goto('https://www.gmail.com/login');
+
+        // You can also use a relative path if you set a `baseURL` in playwright.config.js
+        // If baseURL is "http://localhost:3000"
+        await page.goto('/login'); // Will go to http://localhost:3000/login
+
+    ---------------------------------------------------------------------------------------------------------
+
+    page.locator() - Creates a locator that points to an element on the page. This is the recommended way to select elements. It can take a CSS selector, an XPath expression, or use Playwright's special locators.
+        // Get an element by its CSS selector
+        const header = page.locator('#main-header');
+        const listItems = page.locator('.list-item');
+
+        // Get an element by its attribute
+        const passwordInput = page.locator('input[name="password"]');
+
+--------------------------------------------------------------------------------------------------------------
+
+2. Finding Elements (Using Locators)
+
+    page.getByRole() - The best-practice way to locate elements. It finds elements by their ARIA role, which is how accessibility tools see the page.
+        // Find a button by its accessible name (usually its text)
+        const submitButton = page.getByRole('button', { name: 'Sign in' });
+
+        // Find a heading
+        const mainHeading = page.getByRole('heading', { name: 'Welcome!' });
+
+        // Find a checkbox
+        const termsCheckbox = page.getByRole('checkbox', { name: 'I agree' });
+        const signinRadio = page.getByRole('radio', {name: 'keep me signed in'});
+
+    ---------------------------------------------------------------------------------------------------------
+
+    page.getByText() - Finds an element that contains specific text.
+
+        // Find any element with the exact text "Hello World"
+        const greeting = page.getByText('Hello World', { exact: true });
+        const errormsg = page.getByText('please enter valid pincode', {exact: true});
+
+        // Find an element containing the substring "successfully"
+        const successMessage = page.getByText('successfully');
+
+    ---------------------------------------------------------------------------------------------------------
+
+    Other getBy Locators
+    page.getByLabel(): Finds a form control by its associated <label> text.
+    page.getByPlaceholder(): Finds an input by its placeholder text.
+    page.getByAltText(): Finds an image by its alt text.
+    page.getByTitle(): Finds an element by its title attribute.
+
+--------------------------------------------------------------------------------------------------------------
+
+3. Interacting with Elements (Actions on Locators) - All actions are async and should be used with await.
+
+    .click() - Clicks on an element.
+        await page.getByRole('button', { name: 'Submit' }).click();
+        await page.getByRole('button', {name: 'sign up'}).click();
+
+    .dblclick() - Double-click on an element.
+        await page.getByText('Edit').dblclick();
+
+    ---------------------------------------------------------------------------------------------------------
+
+    .fill() - Clears an input field and types text into it. This is the recommended way to fill forms.
+        await page.getByLabel('Email').fill('my.email@domain.com');
+        await page.getByLabel('Password').fill('secret-password');
+        await page.getByLabel('first name').fill('shamili');
+
+    ---------------------------------------------------------------------------------------------------------
+
+    .press() - Simulates a single key press on an element.
+        // Fill the search bar and press Enter
+        const searchInput = page.getByRole('textbox', { name: 'Search' });
+        await searchInput.fill('Playwright');
+        await searchInput.press('Enter');
+        const passwordInput = page.getByRole('textbox', {name: 'Password'});
+        await page.passwordInput.fill('xyz');
+        await page.passwordInput.press('show password');
+
+    ---------------------------------------------------------------------------------------------------------
+
+    .selectOption() - Selects one or more options in a <select> dropdown.
+        const countrySelector = page.getByLabel('Country');
+        // Select by value
+        await countrySelector.selectOption('USA');
+        // Select by label (the visible text)
+        await countrySelector.selectOption({ label: 'Canada' });
+        const genderSelector = page.getByLabel('gender');
+        await page.genderSelector.selectOption('female');
+
+    ---------------------------------------------------------------------------------------------------------
+
+    .check() - Checks a checkbox or radio button.
+        // Check a checkbox
+        await page.getByRole('checkbox', { name: 'I agree to the terms' }).check();
+        await page.getByRole('checkbox', {name: 'keep me logged in'}).check();
+
+    ---------------------------------------------------------------------------------------------------------
+    
+    .uncheck() - unchecks a checkbox or radio button.
+        await page.getByRole('checkbox', { name: 'I agree to the terms' }).uncheck();
+        await page.getByRole('radio', {name: 'receive promotion emails'}).uncheck();
+
+--------------------------------------------------------------------------------------------------------------
+    
+4. Assertions (Verifying Behavior with expect)
+    Playwright uses the expect library for assertions. All assertions are async and wait automatically for the condition to be met.
+    
+    
+    expect(locator).toBeVisible() - Asserts that the element is visible on the page.
+        const errorMessage = page.locator('.error-message');
+        await expect(errorMessage).toBeVisible();
+        const successMsg = page.locator('success-message');
+        await expect(successMsg).toBeVisible();
+
+    ---------------------------------------------------------------------------------------------------------
+
+    expect(locator).toBeHidden() or not.toBeVisible() - Asserts that the element is not visible.
+        const successModal = page.locator('.success-modal');
+        await expect(successModal).toBeHidden();
+
+    ---------------------------------------------------------------------------------------------------------
+
+    expect(locator).toHaveText() - Asserts that the element has the exact text content.
+        const heading = page.getByRole('heading');
+        await expect(heading).toHaveText('Welcome to the Dashboard');
+
+    ---------------------------------------------------------------------------------------------------------
+
+    expect(locator).toContainText() - Asserts that the element's text contains a substring.
+        const paragraph = page.locator('p.status');
+        await expect(paragraph).toContainText('successfully');
+
+    ---------------------------------------------------------------------------------------------------------
+
+    expect(locator).toHaveValue() - Asserts that an input element has a specific value.
+        const emailInput = page.getByLabel('Email');
+        await expect(emailInput).toHaveValue('my.email@domain.com');
+
+    ---------------------------------------------------------------------------------------------------------
+
+    expect(page).toHaveURL() -  Asserts the current URL of the page.
+        // The URL should contain '/dashboard'
+        await expect(page).toHaveURL(/.*dashboard/);
+
+    ---------------------------------------------------------------------------------------------------------
+
+    expect(page).toHaveTitle() - Asserts the title of the current page (<title> tag).
+        await expect(page).toHaveTitle('My App | Dashboard');
+
+--------------------------------------------------------------------------------------------------------------
+
+5. A Complete, Simple Example
+
+    // File: tests/example.spec.js
+    import { test, expect } from '@playwright/test';
+
+    test('should allow a user to log in', async ({ page }) => {
+    // 1. Visit the login page
+    await page.goto('http://localhost:3000/login');
+
+    // 2. Find the email input by its label and fill it
+    await page.getByLabel('Email').fill('testuser@example.com');
+
+    // 3. Find the password input and fill it
+    await page.getByLabel('Password').fill('password123');
+
+    // 4. Find the "Log In" button by its role and click it
+    await page.getByRole('button', { name: 'Log In' }).click();
+
+    // 5. Assert that the URL is now the dashboard
+    await expect(page).toHaveURL(/.*dashboard/);
+
+    // 6. Assert that a welcome heading is visible on the new page
+    const welcomeHeading = page.getByRole('heading', { name: /Welcome, Test User/ });
+    await expect(welcomeHeading).toBeVisible();
+    });
+
+--------------------------------------------------------------------------------------------------------------
+

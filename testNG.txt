@@ -1,0 +1,100 @@
+Assertion commands are crucial for verifying whether the actual state of your web 
+application matches the expected state. Selenium WebDriver itself doesn't have built-in 
+assertion methods; instead, you integrate it with a testing framework that provides these 
+capabilities. The two most popular testing frameworks in Java for this purpose are 
+TestNG and JUnit.
+
+Both frameworks provide similar types of assertions, but their classes and imports differ.
+
+1. Using TestNG Assertions 
+
+import org.testng.Assert; (for hard assertions)
+import org.testng.asserts.SoftAssert; (for soft assertions)
+
+Hard Assertions
+
+Hard assertions immediately stop the test method's execution if the assertion fails. 
+The remaining lines of code in that test method will not be executed, and the test method 
+will be marked as "Failed".
+
+Common Assert Methods with Selenium Examples:
+
+    1. Assert.assertEquals(actual, expected, message):
+        // Compares two values for equality.
+        // Use case: Verify exact text, URL, attribute values, etc.
+        // example: 
+        String actualTitle = driver.getTitle();
+        String expectedTitle = "Google";
+        Assert.assertEquals(actualTitle, expectedTitle, "Page title mismatch!");
+    
+    2. Assert.assertTrue(condition, message):
+        // Checks if a given boolean condition is true.
+        // Use case: Verify element visibility, enabled state, selected state, or 
+        // any custom boolean logic.
+
+        // Verify element is displayed
+        WebElement logo = driver.findElement(By.id("app_logo"));
+        Assert.assertTrue(logo.isDisplayed(), "Application logo is not displayed!");
+
+    3. Assert.assertFalse(condition, message):
+        // Checks if a given boolean condition is false.
+        // Use case: Verify an element is not displayed, disabled, or not selected.
+
+        WebElement errorMessage = driver.findElement(By.id("error_message"));
+        Assert.assertFalse(errorMessage.isDisplayed(), "Error message should not be displayed
+                             before submission!");
+
+    4. Assert.assertNull(object, message):
+        // Checks if an object is null. (Less common directly with WebElements, but useful for other Java logic within tests).
+    
+    5. Assert.assertNotNull(object, message):
+        // Checks if an object is not null.
+    
+    6. Assert.fail(message):
+        // Explicitly fails the test method. Useful inside catch blocks or for custom 
+        // failure logic.
+        try {
+        WebElement element = driver.findElement(By.id("nonExistentElement"));
+        // This line won't be reached if element is not found
+        } catch (NoSuchElementException e) {
+        Assert.fail("Element was not found: " + e.getMessage());
+        }
+
+Soft Assertions
+
+Soft assertions (also known as "verifies") do not stop the test method's execution 
+immediately when an assertion fails. Instead, they record the failure. All failures are 
+reported only at the end of the test method when assertAll() is called. This is useful 
+when you want to validate multiple conditions in a single test and see all failures, even 
+if the first one fails.
+
+    import org.testng.Assert;
+    import org.testng.annotations.Test;
+    import org.testng.asserts.SoftAssert; // Import for SoftAssert
+
+    public class SoftAssertExample {
+
+        @Test
+        public void softAssertionTest() {
+            SoftAssert softAssert = new SoftAssert(); // Create an instance of SoftAssert
+
+            String actualTitle = "Expected Title Part";
+            String expectedTitle = "Expected Title";
+            softAssert.assertEquals(actualTitle, expectedTitle, "Title mismatch!"); // This will fail
+
+            boolean elementDisplayed = false;
+            softAssert.assertTrue(elementDisplayed, "Element should be displayed!"); // This will also fail
+
+            System.out.println("This line will still execute even after failed assertions.");
+
+            String actualUrl = "https://example.com/login";
+            String expectedUrl = "https://example.com/dashboard";
+            softAssert.assertEquals(actualUrl, expectedUrl, "URL mismatch!"); // Another failure
+
+            // CRUCIAL: Call assertAll() at the end to report all collected failures
+            softAssert.assertAll();
+            System.out.println("assertAll() called. If there were failures, the test would now be marked as FAILED.");
+        }
+    }
+
+

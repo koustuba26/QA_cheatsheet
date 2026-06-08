@@ -1,0 +1,74 @@
+Sample Basic Selenium Program (Java)
+This program will:
+
+Set up the ChromeDriver.
+Open the Chrome browser.
+Navigate to https://www.google.com.
+Type "Selenium WebDriver" into the search bar.
+Click the "Google Search" button.
+Print the title of the search results page.
+Close the browser.
+
+import org.openqa.selenium.By; // To locate web elements (like by ID, name, CSS selector)
+import org.openqa.selenium.WebDriver; // The main interface for browser automation
+import org.openqa.selenium.WebElement; // Represents an HTML element on the page
+import org.openqa.selenium.chrome.ChromeDriver; // The specific WebDriver implementation for Chrome
+import org.openqa.selenium.Keys; // To send special keys like ENTER
+
+public class GoogleSearchTest {
+
+    public static void main(String[] args) {
+        // Step 1: Set the path to the ChromeDriver executable
+        // IMPORTANT: Replace "path/to/your/chromedriver.exe" with the actual path
+        // where you downloaded and extracted chromedriver.
+        // Example Windows: System.setProperty("webdriver.chrome.driver", "C:\\SeleniumDrivers\\chromedriver.exe");
+        // Example macOS/Linux: System.setProperty("webdriver.chrome.driver", "/Users/yourusername/selenium_drivers/chromedriver");
+        System.setProperty("webdriver.chrome.driver", "path/to/your/chromedriver.exe");
+
+        // Step 2: Instantiate a new ChromeDriver (opens a Chrome browser window)
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            // Step 3: Navigate to Google's homepage
+            System.out.println("Navigating to Google...");
+            driver.get("https://www.google.com");
+
+            // Step 4: Find the search input field by its 'name' attribute
+            // (You can inspect the Google page source to find element attributes)
+            System.out.println("Finding search box...");
+            WebElement searchBox = driver.findElement(By.name("q"));
+
+            // Step 5: Type "Selenium WebDriver" into the search box
+            System.out.println("Typing 'Selenium WebDriver' into search box...");
+            searchBox.sendKeys("Selenium WebDriver");
+
+            // Step 6: Simulate pressing the ENTER key to submit the search
+            // Alternatively, you could find and click the "Google Search" button
+            // WebElement searchButton = driver.findElement(By.name("btnK"));
+            // searchButton.click();
+            System.out.println("Pressing ENTER to search...");
+            searchBox.sendKeys(Keys.ENTER);
+
+            // Step 7: Print the title of the current page (should be search results page)
+            // This is a simple verification step
+            String pageTitle = driver.getTitle();
+            System.out.println("Page Title after search: " + pageTitle);
+
+            // Optional: Keep the browser open for a few seconds to see the results
+            // In real tests, you'd add assertions here.
+            Thread.sleep(3000); // 3-second pause
+
+        } catch (Exception e) {
+            // Catch any exceptions that occur during the test execution
+            e.printStackTrace();
+        } finally {
+            // Step 8: Close the browser and quit the WebDriver session
+            // This is crucial to release resources
+            System.out.println("Closing browser...");
+            if (driver != null) {
+                driver.quit();
+            }
+            System.out.println("Test finished.");
+        }
+    }
+}

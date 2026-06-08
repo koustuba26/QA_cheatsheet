@@ -1,0 +1,52 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
+import java.time.Duration;
+
+public class LoginTest {
+
+    public static void main(String[] args) {
+        // Set the path to the ChromeDriver executable
+        // NOTE: As of Selenium 4.6+, this line is no longer required due to WebDriverManager
+        // System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+
+        WebDriver driver = new ChromeDriver();
+
+        try {
+            // Navigate to the login page (replace with the actual URL)
+            driver.get("https://your-website.com/login");
+
+            // Define explicit wait for elements to be present
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+            wait.until(ExpectedConditions.presenceOfElementLocated(By.id("LoginEmail")));
+
+            // Find and interact with the email field
+            WebElement loginEmail = driver.findElement(By.id("LoginEmail"));
+            loginEmail.sendKeys("xyz@gmail.com");
+
+            // Find and interact with the password field
+            WebElement loginPassword = driver.findElement(By.id("LoginPassword"));
+            loginPassword.sendKeys("xyz");
+
+            // Find and click the login button
+            WebElement loginButton = driver.findElement(By.id("LoginButton"));
+            loginButton.click();
+
+            // Wait for the next page to load (verify with a unique element)
+            wait.until(ExpectedConditions.urlContains("dashboard")); // Replace "dashboard"
+            
+            System.out.println("Login test successful!");
+
+        } catch (Exception e) {
+            System.err.println("Login test failed: " + e.getMessage());
+        } finally {
+            // Always close the browser, regardless of the test outcome
+            if (driver != null) {
+                driver.quit();
+            }
+        }
+    }
+}
